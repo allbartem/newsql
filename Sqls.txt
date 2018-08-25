@@ -1,0 +1,297 @@
+SELECT 
+WONUM,REPORTEDBY,STATUS,
+NVL2(STATUSDATE,TO_CHAR(TO_DATE(STATUSDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000','0001-01-01-00.00.00.0000000') AS STATUSDATE,
+LEADCRAFT,LOCATION,SERVICE,
+dbms_random.string( 'x', 50 ) AS CALLER_N,
+dbms_random.string( 'x', 100 ) AS CALLER_LNAME,
+DESCRIPTION,
+dbms_random.string( 'x', 50 ) AS CALLER_PHONE,
+dbms_random.string( 'x', 750 ) AS CALLER_ADDR,
+FLOOR,
+dbms_random.string( 'x', 1000) AS FIELD_LNG,
+RESOLUTION_CATEGORY,SUITE,AREA,FAILURECODE,
+NVL2(FAILDATE,TO_CHAR(TO_DATE(FAILDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000','0001-01-01-00.00.00.0000000') AS FAILDATE,
+dbms_random.string( 'x', 100) AS REQ_TYPE,
+NVL2(RESPONDBY,TO_CHAR(TO_DATE(RESPONDBY,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000','0001-01-01-00.00.00.0000000') AS RESPONDBY,
+dbms_random.string( 'x', 26) AS EQ_TYPE,
+NVL2(SCHEDSTART,TO_CHAR(TO_DATE(SCHEDSTART,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000','0001-01-01-00.00.00.0000000') AS SCHEDSTART,
+round(dbms_random.value(0,5)) AS INVOCEB,
+round(dbms_random.value(0,500090)) AS QUOTEX,
+round(dbms_random.value(0,6)) AS QTYPEX,
+round(dbms_random.value(111,111116)) AS CHARGE_TOACCX,
+dbms_random.string( 'x', 50 ) AS CHARGE_TO_A,
+CHARGESTORE,
+dbms_random.string( 'x', 1 ) AS  billable_material,
+dbms_random.string( 'x', 40 ) AS  srvcprovider_id,
+dbms_random.string( 'x', 240 ) AS  srvcprovider_name,
+dbms_random.string( 'x', 5 ) AS  wo_type,
+dbms_random.string( 'x', 20 ) AS  po_number,
+dbms_random.string( 'x', 3 ) AS  wo_priority_code,
+dbms_random.string( 'x', 30 ) AS  wo_priority_desc,
+dbms_random.string( 'x', 30 ) AS  wo_reference,
+dbms_random.string( 'x', 130 ) AS  jp_desc,
+dbms_random.string( 'x', 1 ) AS  jp_compliance,
+dbms_random.string( 'x', 10 ) AS  client_loc_code,
+dbms_random.string( 'x', 255 ) AS  client_loc_name,
+dbms_random.string( 'x', 750 ) AS  client_loc_addr,
+dbms_random.string( 'x', 50 ) AS  client_loc_mgr,
+dbms_random.string( 'x', 50 ) AS  fmz_code,
+dbms_random.string( 'x', 50 ) AS  fmz_mgr,
+dbms_random.string( 'x', 10 ) AS  region,
+dbms_random.string( 'x', 50 ) AS  region_mgr,
+dbms_random.string( 'x', 20 ) AS  comp_performance,
+NVL2(SCHEDFINISH,TO_CHAR(TO_DATE(SCHEDFINISH,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000','0001-01-01-00.00.00.0000000') AS SCHEDFINISH,
+dbms_random.string( 'x', 10 ) AS ISPARENT2,
+dbms_random.string( 'x', 50 ) AS WBS_DESC,
+dbms_random.string( 'x', 15 ) AS SVRCLASS,
+dbms_random.string( 'x', 30 ) AS VENDORCATEGX,
+dbms_random.string( 'x', 4 ) AS WBS_ID,
+dbms_random.string( 'x', 50 ) AS ASSET_GRP_DESC,
+dbms_random.string( 'x', 21 ) AS ASSET_GP,
+dbms_random.string( 'x', 50 ) AS EQDESCX,
+round(dbms_random.value(1.02,115000.05)) AS JPDURX,
+dbms_random.string( 'x', 20 ) AS JPNUM,
+dbms_random.string( 'x', 50 ) AS CALLEREMAIL,
+dbms_random.string( 'x', 500 ) AS RESDETAIL,
+NVL2(TARGCOMPDATE,TO_CHAR(TO_DATE(TARGCOMPDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000','0001-01-01-00.00.00.0000000') AS TARGCOMPDATE
+--NVL2(col1, col2, col3)
+-- If first param is not null it returns the value in the 2nd. 
+--If  first parameter value is null, it returns the 3rd.
+
+FROM RHLP_WORKORDER
+WHERE WONUM LIKE 'AGI17%';
+
+DECODE(TARGCOMPDATE IS NULL, NULL, '0001-01-01-00.00.00.0000000', IS NOT NULL, TO_CHAR(TO_DATE(TARGCOMPDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000') AS TARGCOMPDECODE
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SELECT 
+WONUM,
+REPORTEDBY,
+STATUS,
+CASE 
+ WHEN STATUSDATE IS NULL THEN '0001-01-01-00.00.00.000000'
+ ELSE TO_CHAR(TO_DATE(STATUSDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000'
+END  AS STATUSDATE,
+LEADCRAFT,
+LOCATION,
+SERVICE,
+dbms_random.string( 'x', 50 ) AS CALLER_N,
+dbms_random.string( 'x', 100 ) AS CALLER_LNAME,
+DESCRIPTION,
+dbms_random.string( 'x', 50 ) AS CALLER_PHONE,
+dbms_random.string( 'x', 750 ) AS CALLER_ADDR,
+FLOOR,
+dbms_random.string( 'x', 1000) AS FIELD_LNG,
+RESOLUTION_CATEGORY,
+SUITE,
+AREA,
+FAILURECODE,
+CASE 
+ WHEN FAILDATE IS NULL THEN '0001-01-01-00.00.00.000000'
+ ELSE TO_CHAR(TO_DATE(FAILDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000'
+END  AS FAILDATE,
+dbms_random.string( 'x', 100) AS REQ_TYPE,
+CASE 
+ WHEN RESPONDBY IS NULL THEN '0001-01-01-00.00.00.000000'
+ ELSE TO_CHAR(TO_DATE(RESPONDBY,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000'
+END  AS RESPONDBY,
+dbms_random.string( 'x', 26) AS EQ_TYPE,
+CASE 
+ WHEN SCHEDSTART IS NULL THEN '0001-01-01-00.00.00.000000'
+ ELSE TO_CHAR(TO_DATE(SCHEDSTART,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000'
+END  AS SCHEDSTART,
+round(dbms_random.value(0,5)) AS INVOCEB,
+round(dbms_random.value(0,500090)) AS QUOTEX,
+round(dbms_random.value(0,6)) AS QTYPEX,
+round(dbms_random.value(111,111116)) AS CHARGE_TOACCX,
+dbms_random.string( 'x', 50 ) AS CHARGE_TO_A,
+CHARGESTORE,
+dbms_random.string( 'x', 1 ) AS  billable_material,
+dbms_random.string( 'x', 40 ) AS  srvcprovider_id,
+dbms_random.string( 'x', 240 ) AS  srvcprovider_name,
+dbms_random.string( 'x', 5 ) AS  wo_type,
+dbms_random.string( 'x', 20 ) AS  po_number,
+dbms_random.string( 'x', 3 ) AS  wo_priority_code,
+dbms_random.string( 'x', 30 ) AS  wo_priority_desc,
+dbms_random.string( 'x', 30 ) AS  wo_reference,
+dbms_random.string( 'x', 130 ) AS  jp_desc,
+dbms_random.string( 'x', 1 ) AS  jp_compliance,
+dbms_random.string( 'x', 10 ) AS  client_loc_code,
+dbms_random.string( 'x', 255 ) AS  client_loc_name,
+dbms_random.string( 'x', 750 ) AS  client_loc_addr,
+dbms_random.string( 'x', 50 ) AS  client_loc_mgr,
+dbms_random.string( 'x', 50 ) AS  fmz_code,
+dbms_random.string( 'x', 50 ) AS  fmz_mgr,
+dbms_random.string( 'x', 10 ) AS  region,
+dbms_random.string( 'x', 50 ) AS  region_mgr,
+dbms_random.string( 'x', 20 ) AS  comp_performance,
+CASE 
+ WHEN SCHEDFINISH IS NULL THEN '0001-01-01-00.00.00.000000'
+ ELSE TO_CHAR(TO_DATE(SCHEDFINISH,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000'
+END  AS SCHEDFINISH,
+dbms_random.string( 'x', 10 ) AS ISPARENT2,
+dbms_random.string( 'x', 50 ) AS WBS_DESC,
+dbms_random.string( 'x', 15 ) AS SVRCLASS,
+dbms_random.string( 'x', 30 ) AS VENDORCATEGX,
+dbms_random.string( 'x', 4 ) AS WBS_ID,
+dbms_random.string( 'x', 50 ) AS ASSET_GRP_DESC,
+dbms_random.string( 'x', 21 ) AS ASSET_GP,
+dbms_random.string( 'x', 50 ) AS EQDESCX,
+round(dbms_random.value(1.02,115000.05)) AS JPDURX,
+dbms_random.string( 'x', 20 ) AS JPNUM,
+dbms_random.string( 'x', 50 ) AS CALLEREMAIL,
+dbms_random.string( 'x', 500 ) AS RESDETAIL,
+CASE 
+ WHEN TARGCOMPDATE IS NULL THEN '0001-01-01-00.00.00.0000000'
+ ELSE TO_CHAR(TO_DATE(TARGCOMPDATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000'
+END  AS TARGCOMPDATE
+FROM RHLP_WORKORDER
+WHERE WONUM LIKE 'AGI17%';
+
+=====================================
+select * 
+from v$session 
+where OSUSER = 'bartosn'
+AND PROGRAM = 'SQL Developer'
+
+alter system kill session '<sid>,<serial#>'
+
+select 'alter system 
+kill session ''' || sid || ',' || serial# || ''';' from v$session where username = '<your_schema>'
+
+EXEC DBMS_MVIEW.REFRESH('EACTEST_MV');
+
+--all tables involved in the materialized view inner join
+CREATE MATERIALIZED VIEW LOG ON 
+PRJ_PROJECT
+
+CREATE MATERIALIZED VIEW EACTST_MV
+BUILD DEFERRED REFRESH COMPLETE
+AS
+SELECT ee.EACENTRY_ID - round(dbms_random.value(1,400000)) AS EACENTRY,
+       ee.CLIENT_ID + round(dbms_random.value(10,200)) AS CLIENTID,
+       ee.PROJECT_ID - round(dbms_random.value(1,100000)) AS PROJID,
+       TO_CHAR(TO_DATE(be.CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+      TO_CHAR(TO_DATE(be.UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+      be.DESCRIPTION,
+      SUBSTR( pr.PROJECT_NAME, 10, 30) AS PROJNAME
+FROM PRJ_EACENTRY ee
+INNER JOIN PRJ_BUDGETENTRY be
+  ON be.CLIENT_ID = ee.CLIENT_ID
+INNER JOIN  PRJ_PROJECT pr
+  ON pr.PROJECT_ID = be.PROJECT_ID
+WHERE ee.ROWID<100000;
+
+---------------------
+SELECT ee.EACENTRY_ID - round(dbms_random.value(1,400000)) AS EACENTRY,
+       ee.CLIENT_ID + round(dbms_random.value(10,200)) AS CLIENTID,
+       ee.PROJECT_ID - round(dbms_random.value(1,100000)) AS PROJID,
+       TO_CHAR(TO_DATE(be.CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+      TO_CHAR(TO_DATE(be.UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+      be.DESCRIPTION,
+      SUBSTR( pr.PROJECT_NAME, 10, 30) AS PROJNAME
+FROM PRJ_EACENTRY ee
+WHERE ee.ROWID<100000;
+
+CAST (created_time AS TIMESTAMP)
+
+===========================================================
+SELECT dbms_random.string( 'x', 25 ) AS FIELD_A,
+TO_CHAR(TO_DATE(PLAN_START_DATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000' AS SDATE,
+TO_CHAR(TO_DATE(PLAN_END_DATE,'dd-mm-yy'), 'yyyy-mm-dd-HH.mm.ss')||'.000000' AS EDATE,
+round(dbms_random.value(1,112000),5) AS DECX,
+round(dbms_random.value(1,32000)) AS INTX,
+round(dbms_random.value(1,2147483500)) AS LONGX
+FROM PRJ_PROJECT
+=============================================================
+
+
+CREATE MATERIALIZED VIEW ProjTEST_MV
+BUILD IMMEDIATE
+REFRESH FORCE
+ENABLE QUERY REWRITE AS
+
+
+exec dbms_mview.refresh('ZMV_PROJTASK');
+
+CREATE MATERIALIZED VIEW EACTEST_MV
+BUILD DEFERRED REFRESH COMPLETE
+AS
+SELECT   be.CLIENT_ID,
+       be.PROJECT_ID,
+       TO_CHAR(TO_DATE(be.CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+      TO_CHAR(TO_DATE(be.UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+      be.DESCRIPTION,
+      pr.PROJECT_NAME
+FROM PRJ_BUDGETENTRY be
+  ON be.CLIENT_ID = ee.CLIENT_ID
+INNER JOIN  PRJ_PROJECT pr
+  ON pr.PROJECT_ID = be.PROJECT_ID;
+
+
+SELECT dbms_random.string( 'x', 25 ) AS DESCIP, 
+TO_CHAR(TO_DATE(CREATED_ON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATED_ON,
+TO_CHAR(TO_DATE(UPDATED_ON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATED_ON,
+round(dbms_random.value(1,112000),5) AS DECX,
+round(dbms_random.value(1,32000)) AS INTX,
+round(dbms_random.value(1,2147483500)) AS LONGX
+FROM CLIENT;
+
+SELECT dbms_random.string( 'x', 25 ) AS FIELD_A
+TO_CHAR(TO_DATE(PLAN_START_DATE,'dd-mm-yy'), 'yyyy-mm-dd') AS SDATE,
+TO_CHAR(TO_DATE(PLAN_END_DATE,'dd-mm-yy'), 'yyyy-mm-dd') AS EDATE,
+round(dbms_random.value(1,112000),5) AS DECX,
+round(dbms_random.value(1,32000)) AS INTX,
+round(dbms_random.value(1,2147483500)) AS LONGX
+FROM PRJ_PROJECT
+
+SELECT ee.EACENTRY_ID - round(dbms_random.value(1,400000)) AS EACENTRY,
+       ee.CLIENT_ID + round(dbms_random.value(10,200)) AS CLIENTID,
+       ee.PROJECT_ID - round(dbms_random.value(1,100000)) AS PROJID,
+       TO_CHAR(TO_DATE(be.CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+      TO_CHAR(TO_DATE(be.UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+      be.DESCRIPTION,
+      SUBSTR( pr.PROJECT_NAME, 10, 30) AS PROJNAME
+FROM PRJ_EACENTRY ee
+INNER JOIN PRJ_BUDGETENTRY be
+  ON be.CLIENT_ID = ee.CLIENT_ID
+INNER JOIN  PRJ_PROJECT pr
+  ON pr.PROJECT_ID = be.PROJECT_ID;
+
+
+SELECT dbms_random.string( 'x', 25 ) AS FIELD_A,
+TO_CHAR(TO_DATE(CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+TO_CHAR(TO_DATE(UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+round(dbms_random.value(1,112000),5) AS DECX,
+round(dbms_random.value(1,32000)) AS INTX,
+round(dbms_random.value(1,2147483500)) AS LONGX
+FROM PRJ_EACENTRY
+WHERE ROWNUM <=100001
+
+SELECT dbms_random.string( 'x', 25 ) AS FIELD_A,
+TO_CHAR(TO_DATE(CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+TO_CHAR(TO_DATE(UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+round(dbms_random.value(1,112000),5) AS DECX,
+round(dbms_random.value(1,32000)) AS INTX,
+round(dbms_random.value(1,2147483500)) AS LONGX
+FROM PRJ_EACENTRY
+WHERE ROWNUM <=500001
+
+
+select 
+   table_name, 
+   num_rows  
+from 
+   dba_tables 
+   WHERE num_rows Is Not Null
+   AND table_name LIKE 'PRJ%'
+   ORDER BY num_rows DESC
+
+SELECT dbms_random.string( 'x', 25 ) AS FIELD_A
+TO_CHAR(TO_DATE(CREATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS CREATEDON,
+TO_CHAR(TO_DATE(UPDATEDON,'dd-mm-yy'), 'yyyy-mm-dd') AS UPDATEDON,
+round(dbms_random.value(1,112000),5) AS DECX,
+round(dbms_random.value(1,32000)) AS INTX,
+round(dbms_random.value(1,2147483500)) AS LONGX
+FROM PRJ_EAC
